@@ -117,6 +117,33 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  // register a new user.
+  const register = async (userData) => {
+    setError(null);
+
+    try {
+      await api.post("/auth/register/", userData);
+
+      await login(userData.username, userData.password);
+
+      return true;
+    } catch (err) {
+      const message =
+        err.response?.data?.detail ||
+        err.response?.data?.message ||
+        err.message ||
+        "Registration or login failed. Please try again.";
+
+      setError(
+        typeof message === "string"
+          ? message
+          : "Registration or login failed. Please check your details.",
+      );
+
+      throw err;
+    }
+  };
+
   // Log out a user.
   const logout = () => {
     localStorage.removeItem("token");
@@ -167,6 +194,7 @@ export const AuthProvider = ({ children }) => {
         login,
         logout,
         refreshUser,
+        register,
       }}
     >
       {children}
