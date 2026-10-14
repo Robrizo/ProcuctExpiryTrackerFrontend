@@ -30,6 +30,7 @@ const Navbar = ({ openNotifications, notificationsCount = 0 }) => {
             <button
               onClick={openNotifications}
               type="button"
+              title="Notifications"
               className="relative p-2 text-gray-00 hover:bg-gray-100 rounded-lg transition-colors cursor-pointer"
             >
               <Bell className="w-5 h-5" />

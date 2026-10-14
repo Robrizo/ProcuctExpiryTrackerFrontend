@@ -1,12 +1,44 @@
-import React from "react";
-import { useAuth } from "../context/AuthContext";
+import React, { useEffect, useMemo, useState } from "react";
+import api, { useAuth } from "../context/AuthContext";
 import Navbar from "../components/Navbar";
 import DashboardCard from "../components/DashboardCard";
 import { Link } from "react-router";
-import { Plus } from "lucide-react";
+import { AlertTriangle, Clock, Plus, ShieldCheck } from "lucide-react";
 
 const Dashboard = () => {
   const { user } = useAuth();
+  const [isLoading, setIsLoading] = useState(true);
+  const [products, setProducts] = useState([]);
+
+  // fetch products
+  const fetchProducts = async () => {
+    setIsLoading(true);
+
+    try {
+      const response = await api.get("/products");
+      setProducts(response.data);
+    } catch (error) {
+      console.error("Failed to load products", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchProducts();
+  }, []);
+
+  // metrics calculation
+  const metrics = useMemo(() => {
+    const total = products.length;
+    const expiringSoon = products.filter(
+      (p) => p.status === "Expiring Soon",
+    ).length;
+    const expired = products.filter((p) => p.status === "Expired").length;
+    const fresh = products.filter((p) => p.status === "Fresh").length;
+
+    return { total, expiringSoon, expired, fresh };
+  }, [products]);
   return (
     <div className="min-h-screen bg-gray-100">
       <Navbar />
@@ -37,10 +69,28 @@ const Dashboard = () => {
         </div>
 
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-5 mb-8">
-          <DashboardCard />
-          <DashboardCard />
-          <DashboardCard />
-          <DashboardCard />
+          <DashboardCard title={"Total Products"} count={metrics.total} />
+          <DashboardCard
+            title={"Expiring Soon"}
+            icon={Clock}
+            count={metrics.expiringSoon}
+            iconColor="text-amber-900"
+            iconBgColor="bg-amber-100"
+          />
+          <DashboardCard
+            title={"Expired"}
+            icon={AlertTriangle}
+            count={metrics.expired}
+            iconColor="text-rose-900"
+            iconBgColor="bg-rose-100"
+          />
+          <DashboardCard
+            title={"Fresh"}
+            icon={ShieldCheck}
+            count={metrics.fresh}
+            iconColor="text-emerald-900"
+            iconBgColor="bg-emerald-100"
+          />
         </div>
       </main>
     </div>
