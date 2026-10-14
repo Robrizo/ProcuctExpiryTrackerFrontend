@@ -14,7 +14,7 @@ const Navbar = ({ openNotifications, notificationsCount = 0 }) => {
   };
   return (
     <header className="bg-white shadow sticky top-0 z-30">
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* logo */}
           <Link to={"/dashboard"}>
@@ -50,7 +50,7 @@ const Navbar = ({ openNotifications, notificationsCount = 0 }) => {
                 <span className="capitalize text-sm text-gray-800 leading-tight">
                   {user.username}
                 </span>
-                <span className="text-[11px] text-gray-600 leading-tight">
+                <span className="hidden sm:block text-[11px] text-gray-600 leading-tight">
                   {user.email}
                 </span>
               </div>
@@ -58,7 +58,7 @@ const Navbar = ({ openNotifications, notificationsCount = 0 }) => {
 
             {/* Logout */}
             <button
-              id="nav-logout-btn"
+              title="Logout"
               type="button"
               onClick={handleLogout}
               className="inline-flex items-center gap-1.5 px-3 py-2 text-sm text-rose-600 bg-rose-50 hover:text-rose-600 hover:bg-rose-100 rounded-lg transition-colors cursor-pointer"
