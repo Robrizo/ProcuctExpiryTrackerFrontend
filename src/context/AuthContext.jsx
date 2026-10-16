@@ -74,7 +74,7 @@ export const AuthProvider = ({ children }) => {
     setError(null);
 
     try {
-      const response = await api.post("auth/login/", {
+      const response = await api.post("auth/login", {
         username,
         password,
       });
@@ -122,7 +122,7 @@ export const AuthProvider = ({ children }) => {
     setError(null);
 
     try {
-      await api.post("/auth/register/", userData);
+      await api.post("/auth/register", userData);
 
       await login(userData.username, userData.password);
 

@@ -19,7 +19,7 @@ const Navbar = ({ openNotifications, notificationsCount = 0 }) => {
           {/* logo */}
           <Link to={"/dashboard"}>
             <div className="text-blue-600 font-bold text-2xl/4">PET</div>
-            <span className="text-gray-600 text-sm">
+            <span className="hidden text-gray-600 text-sm sm:block">
               Product Expiry Tracker
             </span>
           </Link>
