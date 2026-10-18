@@ -3,12 +3,17 @@ import api, { useAuth } from "../context/AuthContext";
 import Navbar from "../components/Navbar";
 import DashboardCard from "../components/DashboardCard";
 import { Link } from "react-router";
-import { AlertTriangle, Clock, Plus, ShieldCheck } from "lucide-react";
+import { AlertTriangle, Clock, Filter, Plus, ShieldCheck } from "lucide-react";
+import SearchBar from "../components/SearchBar";
 
 const Dashboard = () => {
   const { user } = useAuth();
   const [isLoading, setIsLoading] = useState(true);
   const [products, setProducts] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState("all");
+  const [statusFilter, setStatusFilter] = useState("all");
+
+  const [notifications, setNotifications] = useState([]);
 
   // fetch products
   const fetchProducts = async () => {
@@ -24,8 +29,19 @@ const Dashboard = () => {
     }
   };
 
+  // fetch notification
+  const fetchNotifications = async () => {
+    try {
+      const logs = await api.get("/notifications/logs");
+      setNotifications(logs);
+    } catch (error) {
+      console.error("Failed to load notifications", error);
+    }
+  };
+
   useEffect(() => {
     fetchProducts();
+    fetchNotifications();
   }, []);
 
   // metrics calculation
@@ -38,6 +54,14 @@ const Dashboard = () => {
     const fresh = products.filter((p) => p.status === "Fresh").length;
 
     return { total, expiringSoon, expired, fresh };
+  }, [products]);
+
+  const categories = useMemo(() => {
+    const set = new Set();
+    products.forEach((p) => {
+      if (p.category) set.add(p.category);
+    });
+    return Array.from(set);
   }, [products]);
   return (
     <div className="min-h-screen bg-gray-100">
@@ -68,6 +92,7 @@ const Dashboard = () => {
           </div>
         </div>
 
+        {/* stats cards */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-5 mb-8">
           <DashboardCard title={"Total Products"} count={metrics.total} />
           <DashboardCard
@@ -91,6 +116,90 @@ const Dashboard = () => {
             iconColor="text-emerald-900"
             iconBgColor="bg-emerald-100"
           />
+        </div>
+
+        {/* search and filter */}
+        <div className="bg-white p-4 rounded-xl border border-gray-200 shadow-xs mb-6 space-y-3">
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+            <div className="flex-1">
+              <SearchBar />
+            </div>
+
+            {/* Category Dropdown */}
+            {categories.length > 0 && (
+              <div className="flex items-center gap-2">
+                <Filter className="w-4 h-4 text-gray-400 shrink-0" />
+                <select
+                  id="category-filter-select"
+                  value={selectedCategory}
+                  onChange={(e) => setSelectedCategory(e.target.value)}
+                  className="bg-white border border-gray-200 text-sm text-gray-700 py-2.5 px-3 rounded-lg focus:ring-2 focus:ring-gray-900/10 focus:border-gray-800 transition-colors shadow-xs"
+                >
+                  <option value="all">All Categories</option>
+                  {categories.map((cat) => (
+                    <option key={cat} value={cat}>
+                      {cat}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            )}
+          </div>
+
+          {/* Status Filter Pill Tabs */}
+          <div className="flex items-center gap-1.5 pt-2 border-t border-gray-100 overflow-x-auto text-xs pb-1 sm:pb-0">
+            <span className="text-gray-400 font-medium mr-1.5 shrink-0">
+              Filter:
+            </span>
+            <button
+              id="filter-status-all"
+              type="button"
+              onClick={() => setStatusFilter("all")}
+              className={`px-3 py-1 rounded-md font-medium transition-colors cursor-pointer shrink-0 ${
+                statusFilter === "all"
+                  ? "bg-gray-900 text-white"
+                  : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+              }`}
+            >
+              All ({metrics.total})
+            </button>
+            <button
+              id="filter-status-fresh"
+              type="button"
+              onClick={() => setStatusFilter("fresh")}
+              className={`px-3 py-1 rounded-md font-medium transition-colors cursor-pointer shrink-0 ${
+                statusFilter === "fresh"
+                  ? "bg-emerald-600 text-white"
+                  : "bg-emerald-50 text-emerald-800 hover:bg-emerald-100"
+              }`}
+            >
+              Fresh ({metrics.fresh})
+            </button>
+            <button
+              id="filter-status-expiring"
+              type="button"
+              onClick={() => setStatusFilter("expiring")}
+              className={`px-3 py-1 rounded-md font-medium transition-colors cursor-pointer shrink-0 ${
+                statusFilter === "expiring"
+                  ? "bg-amber-600 text-white"
+                  : "bg-amber-50 text-amber-800 hover:bg-amber-100"
+              }`}
+            >
+              Expiring Soon ({metrics.expiringSoon})
+            </button>
+            <button
+              id="filter-status-expired"
+              type="button"
+              onClick={() => setStatusFilter("expired")}
+              className={`px-3 py-1 rounded-md font-medium transition-colors cursor-pointer shrink-0 ${
+                statusFilter === "expired"
+                  ? "bg-rose-600 text-white"
+                  : "bg-rose-50 text-rose-800 hover:bg-rose-100"
+              }`}
+            >
+              Expired ({metrics.expired})
+            </button>
+          </div>
         </div>
       </main>
     </div>
