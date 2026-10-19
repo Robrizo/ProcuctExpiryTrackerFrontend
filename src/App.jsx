@@ -5,6 +5,7 @@ import RegisterPage from "./pages/RegisterPage";
 import { AuthProvider, useAuth } from "./context/AuthContext";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Dashboard from "./pages/Dashboard";
+import AddProductPage from "./pages/AddProductPage";
 
 const RootRedirect = () => {
   const { user, isLoading } = useAuth();
@@ -39,6 +40,14 @@ const App = () => {
             element={
               <ProtectedRoute>
                 <Dashboard />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/products/create"
+            element={
+              <ProtectedRoute>
+                <AddProductPage />
               </ProtectedRoute>
             }
           />
