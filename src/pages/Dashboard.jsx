@@ -6,6 +6,7 @@ import { Link } from "react-router";
 import { AlertTriangle, Clock, Filter, Plus, ShieldCheck } from "lucide-react";
 import SearchBar from "../components/SearchBar";
 import ProductTable from "../components/ProductTable";
+import Swal from "sweetalert2";
 
 const Dashboard = () => {
   const { user } = useAuth();
@@ -45,6 +46,34 @@ const Dashboard = () => {
     fetchProducts();
     fetchNotifications();
   }, []);
+
+  // delete a product
+  const handleDeleteProduct = async (id) => {
+    try {
+      await api.delete(`/products/${id}`);
+      setProducts((prev) => prev.filter((p) => p.id !== id));
+
+      Swal.fire({
+        toast: true,
+        position: "top-end",
+        icon: "success",
+        title: "Product deleted",
+        showConfirmButton: false,
+        timer: 2000,
+        timerProgressBar: true,
+      });
+    } catch (error) {
+      Swal.fire({
+        toast: true,
+        position: "top-end",
+        icon: "error",
+        title: "Failed to delete product",
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+      });
+    }
+  };
 
   // metrics calculation
   const metrics = useMemo(() => {
@@ -94,7 +123,7 @@ const Dashboard = () => {
     });
   }, [products, statusFilter, selectedCategory, searchQuery]);
   return (
-    <div className="min-h-screen bg-gray-100">
+    <div className="min-h-screen bg-gray-100 pb-8">
       <Navbar />
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
         <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mb-8">
@@ -230,7 +259,11 @@ const Dashboard = () => {
 
         {/* Product listing */}
         <div>
-          <ProductTable products={filteredProducts} />
+          <ProductTable
+            products={filteredProducts}
+            isLoading={isLoading}
+            onDelete={handleDeleteProduct}
+          />
         </div>
       </main>
     </div>
