@@ -9,11 +9,9 @@ const DashboardCard = ({
   iconBgColor = "bg-gray-200",
 }) => {
   return (
-    <div className="w-full bg-white p-4 sm:p-5 text-left border border-gray-300 shadow rounded-lg transition-all duration-150 group hover:border-gray-600">
+    <div className="w-full bg-white p-4 sm:p-5 text-left border border-gray-300 shadow rounded-lg">
       <div className="flex items-center justify-between">
-        <span className="text-sm font-medium text-gray-600 group-hover:text-gray-900">
-          {title}
-        </span>
+        <span className="text-sm font-medium text-gray-600">{title}</span>
         <div className={`p-2 rounded-lg ${iconBgColor}`}>
           <Icon className={`w-5 h-5 ${iconColor}`} />
         </div>

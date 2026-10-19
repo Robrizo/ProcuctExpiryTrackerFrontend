@@ -5,12 +5,14 @@ import DashboardCard from "../components/DashboardCard";
 import { Link } from "react-router";
 import { AlertTriangle, Clock, Filter, Plus, ShieldCheck } from "lucide-react";
 import SearchBar from "../components/SearchBar";
+import ProductTable from "../components/ProductTable";
 
 const Dashboard = () => {
   const { user } = useAuth();
   const [isLoading, setIsLoading] = useState(true);
   const [products, setProducts] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("all");
+  const [searchQuery, setSearchQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
 
   const [notifications, setNotifications] = useState([]);
@@ -56,6 +58,7 @@ const Dashboard = () => {
     return { total, expiringSoon, expired, fresh };
   }, [products]);
 
+  // get categories
   const categories = useMemo(() => {
     const set = new Set();
     products.forEach((p) => {
@@ -63,6 +66,33 @@ const Dashboard = () => {
     });
     return Array.from(set);
   }, [products]);
+
+  // Filtering products
+  const filteredProducts = useMemo(() => {
+    return products.filter((product) => {
+      // Status filter
+      if (statusFilter === "expiring" && product.status !== "Expiring Soon")
+        return false;
+      if (statusFilter === "expired" && product.status !== "Expired")
+        return false;
+      if (statusFilter === "fresh" && product.status !== "Fresh") return false;
+
+      // Category filter
+      if (selectedCategory !== "all" && product.category !== selectedCategory)
+        return false;
+
+      // Search query
+      if (searchQuery.trim()) {
+        const q = searchQuery.toLowerCase();
+        const matchesName = product.name.toLowerCase().includes(q);
+        const matchesCategory = product.category.toLowerCase().includes(q);
+        const matchesNotes = product.notes?.toLowerCase().includes(q) || false;
+        if (!matchesName && !matchesCategory && !matchesNotes) return false;
+      }
+
+      return true;
+    });
+  }, [products, statusFilter, selectedCategory, searchQuery]);
   return (
     <div className="min-h-screen bg-gray-100">
       <Navbar />
@@ -122,18 +152,18 @@ const Dashboard = () => {
         <div className="bg-white p-4 rounded-xl border border-gray-200 shadow-xs mb-6 space-y-3">
           <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
             <div className="flex-1">
-              <SearchBar />
+              <SearchBar value={searchQuery} onChange={setSearchQuery} />
             </div>
 
             {/* Category Dropdown */}
             {categories.length > 0 && (
               <div className="flex items-center gap-2">
-                <Filter className="w-4 h-4 text-gray-400 shrink-0" />
+                <Filter className="w-4 h-4 text-gray-600 shrink-0" />
                 <select
                   id="category-filter-select"
                   value={selectedCategory}
                   onChange={(e) => setSelectedCategory(e.target.value)}
-                  className="bg-white border border-gray-200 text-sm text-gray-700 py-2.5 px-3 rounded-lg focus:ring-2 focus:ring-gray-900/10 focus:border-gray-800 transition-colors shadow-xs"
+                  className="bg-white border border-gray-200 text-sm text-gray-700 py-2.5 px-3 rounded-lg focus:ring-2 focus:ring-blue-900/10 focus:border-blue-600 transition-colors shadow-xs"
                 >
                   <option value="all">All Categories</option>
                   {categories.map((cat) => (
@@ -148,11 +178,10 @@ const Dashboard = () => {
 
           {/* Status Filter Pill Tabs */}
           <div className="flex items-center gap-1.5 pt-2 border-t border-gray-100 overflow-x-auto text-xs pb-1 sm:pb-0">
-            <span className="text-gray-400 font-medium mr-1.5 shrink-0">
+            <span className="text-gray-600 font-medium mr-1.5 shrink-0">
               Filter:
             </span>
             <button
-              id="filter-status-all"
               type="button"
               onClick={() => setStatusFilter("all")}
               className={`px-3 py-1 rounded-md font-medium transition-colors cursor-pointer shrink-0 ${
@@ -164,7 +193,6 @@ const Dashboard = () => {
               All ({metrics.total})
             </button>
             <button
-              id="filter-status-fresh"
               type="button"
               onClick={() => setStatusFilter("fresh")}
               className={`px-3 py-1 rounded-md font-medium transition-colors cursor-pointer shrink-0 ${
@@ -176,7 +204,6 @@ const Dashboard = () => {
               Fresh ({metrics.fresh})
             </button>
             <button
-              id="filter-status-expiring"
               type="button"
               onClick={() => setStatusFilter("expiring")}
               className={`px-3 py-1 rounded-md font-medium transition-colors cursor-pointer shrink-0 ${
@@ -188,7 +215,6 @@ const Dashboard = () => {
               Expiring Soon ({metrics.expiringSoon})
             </button>
             <button
-              id="filter-status-expired"
               type="button"
               onClick={() => setStatusFilter("expired")}
               className={`px-3 py-1 rounded-md font-medium transition-colors cursor-pointer shrink-0 ${
@@ -200,6 +226,11 @@ const Dashboard = () => {
               Expired ({metrics.expired})
             </button>
           </div>
+        </div>
+
+        {/* Product listing */}
+        <div>
+          <ProductTable products={filteredProducts} />
         </div>
       </main>
     </div>
