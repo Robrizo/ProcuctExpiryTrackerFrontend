@@ -144,7 +144,7 @@ const ProductForm = ({
   };
 
   const inputClass = (field) =>
-    `w-full px-3.5 py-2.5 bg-white border rounded-lg text-sm text-slate-900 placeholder:text-slate-400 focus:ring-2 focus:ring-slate-900/10 focus:border-slate-800 transition-colors shadow-xs ${
+    `w-full px-3.5 py-2.5 bg-white border rounded-lg text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-600/10 focus:border-blue-600 transition-colors shadow-xs ${
       fieldErrors[field] ? "border-rose-400" : "border-slate-200"
     }`;
 
@@ -170,12 +170,11 @@ const ProductForm = ({
         </label>
 
         <input
-          id="product-name-input"
           name="name"
           type="text"
           value={name}
           onChange={(e) => setName(e.target.value)}
-          placeholder="e.g. Organic Whole Milk, Sliced Cheddar"
+          placeholder="e.g. Whole Milk, Bread"
           className={inputClass("name")}
           required
           maxLength={150}
@@ -198,7 +197,6 @@ const ProductForm = ({
 
         <div className="space-y-2">
           <input
-            id="product-category-input"
             name="category"
             type="text"
             value={category}
@@ -244,7 +242,6 @@ const ProductForm = ({
           </label>
 
           <input
-            id="product-quantity-input"
             name="quantity"
             type="number"
             min="1"
@@ -278,7 +275,6 @@ const ProductForm = ({
           </label>
 
           <input
-            id="product-purchase-date-input"
             name="purchase_date"
             type="date"
             value={purchaseDate}
@@ -305,7 +301,6 @@ const ProductForm = ({
           </label>
 
           <input
-            id="product-expiry-date-input"
             name="expiry_date"
             type="date"
             value={expiryDate}
@@ -333,7 +328,6 @@ const ProductForm = ({
         </label>
 
         <textarea
-          id="product-notes-input"
           name="notes"
           rows={3}
           value={notes}
@@ -360,7 +354,6 @@ const ProductForm = ({
         </button>
 
         <button
-          id="submit-product-form-btn"
           type="submit"
           disabled={isSubmitting}
           className="px-5 py-2.5 bg-slate-900 hover:bg-slate-800 text-white text-sm font-medium rounded-lg transition-colors shadow-xs cursor-pointer disabled:opacity-50 flex items-center gap-2"

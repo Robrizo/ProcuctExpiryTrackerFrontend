@@ -20,7 +20,7 @@ const AddProductPage = () => {
           <Link
             id="back-to-dashboard-btn"
             to="/dashboard"
-            className="inline-flex items-center gap-1.5 text-sm font-medium text-gray-500 hover:text-gray-900 transition-colors mb-3"
+            className="inline-flex items-center gap-1.5 text-sm font-medium text-gray-500 hover:text-blue-600 transition-colors mb-3"
           >
             <ArrowLeft className="w-4 h-4" />
             <span>Back to Dashboard</span>
