@@ -72,7 +72,7 @@ const ProductDetailPage = () => {
             {/* Header */}
             <div className="p-6 sm:p-8 border-b border-gray-200 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
               <div>
-                <div className="flex items-center gap-3">
+                <div className="mb-2">
                   <h1 className="text-2xl font-bold text-gray-900">
                     {product.name}
                   </h1>
