@@ -38,7 +38,7 @@ const Dashboard = () => {
   const fetchNotifications = async () => {
     try {
       const logs = await api.get("/notifications/logs");
-      setNotifications(logs);
+      setNotifications(logs.data);
     } catch (error) {
       console.error("Failed to load notifications", error);
     }
@@ -126,7 +126,10 @@ const Dashboard = () => {
   }, [products, statusFilter, selectedCategory, searchQuery]);
   return (
     <div className="min-h-screen bg-gray-100 pb-8">
-      <Navbar openNotifications={() => setIsNotificationsOpen(true)} notificationsCount={notifications.length} />
+      <Navbar
+        openNotifications={() => setIsNotificationsOpen(true)}
+        notificationsCount={notifications.length}
+      />
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
         <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mb-8">
           <div>
@@ -269,7 +272,12 @@ const Dashboard = () => {
         </div>
       </main>
 
-      <NotificationsModal isOpen={isNotificationsOpen} onClose={() => setIsNotificationsOpen(false)} />
+      <NotificationsModal
+        isOpen={isNotificationsOpen}
+        onClose={() => setIsNotificationsOpen(false)}
+        notifications={notifications}
+        onRefresh={fetchNotifications}
+      />
     </div>
   );
 };
