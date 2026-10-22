@@ -82,7 +82,7 @@ const ProductTable = ({ products, onDelete, isLoading }) => {
                 <tr
                   key={product.id}
                   id={`product-row-${product.id}`}
-                  className="hover:bg-gray-50/60 transition-colors group"
+                  className="hover:bg-gray-100 transition-colors group"
                 >
                   {/* Name & Notes */}
                   <td className="py-3.5 px-4">

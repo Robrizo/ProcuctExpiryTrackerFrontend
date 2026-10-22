@@ -10,6 +10,7 @@ const COMMON_CATEGORIES = [
   "Frozen",
   "Beverages",
   "Medicine",
+  "Pantry",
   "Household",
 ];
 
@@ -33,9 +34,7 @@ const ProductForm = ({
   const todayStr = getTodayDate();
 
   const [name, setName] = useState(initialValues?.name ?? "");
-  const [category, setCategory] = useState(
-    initialValues?.category ?? "General",
-  );
+  const [category, setCategory] = useState(initialValues?.category ?? "");
   const [quantity, setQuantity] = useState(initialValues?.quantity ?? 1);
   const [purchaseDate, setPurchaseDate] = useState(
     initialValues?.purchase_date ?? todayStr,
