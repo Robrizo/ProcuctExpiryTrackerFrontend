@@ -1,6 +1,7 @@
 import { Calendar, CheckCircle2, Clock, RefreshCw, X } from "lucide-react";
 import React, { useState } from "react";
 import api from "../context/AuthContext";
+import formatDate from "../utils/formatDate";
 
 const NotificationsModal = ({
   onClose,
@@ -23,7 +24,7 @@ const NotificationsModal = ({
     setIsRunningCheck(true);
     setCheckResult(null);
     try {
-      const res = await api.post("/tasks/check-expiry");
+      const res = await api.post("/api/tasks/check-expiry");
 
       setCheckResult(res.data.message || "Check expiry complete");
       await onRefresh();
@@ -111,7 +112,7 @@ const NotificationsModal = ({
                   </span>
                   <span className="text-[11px] text-slate-500 flex items-center gap-1">
                     <Calendar className="w-3 h-3" />
-                    {new Date(item.sent_at).toLocaleString()}
+                    {formatDate(item.sent_at)}
                   </span>
                 </div>
 

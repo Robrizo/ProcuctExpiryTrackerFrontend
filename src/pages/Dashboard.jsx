@@ -13,9 +13,9 @@ const Dashboard = () => {
   const { user } = useAuth();
   const [isLoading, setIsLoading] = useState(true);
   const [products, setProducts] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState("all");
   const [searchQuery, setSearchQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
+  const [selectedCategory, setSelectedCategory] = useState("all");
 
   const [notifications, setNotifications] = useState([]);
   const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
@@ -37,7 +37,7 @@ const Dashboard = () => {
   // fetch notification
   const fetchNotifications = async () => {
     try {
-      const logs = await api.get("/notifications/logs");
+      const logs = await api.get("/api/notifications/logs");
       setNotifications(logs.data);
     } catch (error) {
       console.error("Failed to load notifications", error);
