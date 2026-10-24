@@ -24,7 +24,7 @@ const NotificationsModal = ({
     setIsRunningCheck(true);
     setCheckResult(null);
     try {
-      const res = await api.post("/api/tasks/check-expiry");
+      const res = await api.post("/tasks/check-expiry");
 
       setCheckResult(res.data.message || "Check expiry complete");
       await onRefresh();

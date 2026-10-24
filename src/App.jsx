@@ -8,6 +8,7 @@ import Dashboard from "./pages/Dashboard";
 import AddProductPage from "./pages/AddProductPage";
 import ProductDetailPage from "./pages/ProductDetailPage";
 import EditProductPage from "./pages/EditProductPage";
+import LandingPage from "./pages/LandingPage";
 
 const RootRedirect = () => {
   const { user, isLoading } = useAuth();
@@ -32,7 +33,7 @@ const App = () => {
     <AuthProvider>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<RootRedirect />} />
+          <Route path="/" element={<LandingPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
 
@@ -71,7 +72,7 @@ const App = () => {
           />
 
           {/* fallback route */}
-          <Route path="*" element={<Navigate to="/login" />} />
+          <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </BrowserRouter>
     </AuthProvider>
