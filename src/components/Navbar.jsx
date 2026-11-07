@@ -74,7 +74,7 @@ const Navbar = ({ openNotifications, notificationsCount = 0 }) => {
           </div>
         </header>
       ) : (
-        <header className="bg-blue-50 sticky top-0 z-30">
+        <header className="bg-white/50 backdrop-blur-md shadow fixed w-full top-0 z-30">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex items-center justify-between h-16">
               {/* logo */}
@@ -87,10 +87,10 @@ const Navbar = ({ openNotifications, notificationsCount = 0 }) => {
               <div>
                 <ul className="flex items-center gap-4 text-gray-600 text-sm">
                   <li className="hover:text-blue-600 transition-colors">
-                    <Link to={"#"}>Features</Link>
+                    <a href="#feature">Features</a>
                   </li>
                   <li className="hover:text-blue-600 transition-colors">
-                    <Link to={"#"}>How It Works</Link>
+                    <a href="#">How It Works</a>
                   </li>
                 </ul>
               </div>
