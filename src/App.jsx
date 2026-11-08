@@ -10,24 +10,6 @@ import ProductDetailPage from "./pages/ProductDetailPage";
 import EditProductPage from "./pages/EditProductPage";
 import LandingPage from "./pages/LandingPage";
 
-const RootRedirect = () => {
-  const { user, isLoading } = useAuth();
-
-  if (isLoading) {
-    return (
-      <div className="min-h-screen bg-blue-50 flex items-center justify-center">
-        <div className="inline-block animate-spin rounded-full h-8 w-8 border-4 border-blue-200 border-t-blue-600"></div>
-      </div>
-    );
-  }
-
-  return user ? (
-    <Navigate to="/dashboard" replace />
-  ) : (
-    <Navigate to="/login" replace />
-  );
-};
-
 const App = () => {
   return (
     <AuthProvider>
