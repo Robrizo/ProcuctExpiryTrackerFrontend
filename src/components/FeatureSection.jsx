@@ -49,9 +49,9 @@ const FeatureSection = () => {
     },
   ];
   return (
-    <div id="feature" className="bg-blue-50 py-12">
+    <section id="feature" className="bg-blue-50 py-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-4xl font-bold text-blue-600 font-stylish max-w-lg">
+        <div className="text-4xl font-bold text-blue-600 font-stylish max-w-xl">
           <h1>Everything your household needs to waste less.</h1>
         </div>
 
@@ -61,7 +61,7 @@ const FeatureSection = () => {
           ))}
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 

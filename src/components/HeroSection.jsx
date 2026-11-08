@@ -14,9 +14,8 @@ const HeroSection = () => {
             <span>Expiry Tracker</span>
           </div>
           {/* subtitle */}
-          <div className="inline-flex space-x-2 text-gray-700 font-medium">
-            <span>Track.</span>
-            <span>Get Reminded.</span>
+          <div className="text-gray-700 font-medium">
+            Track. Get Reminded.{" "}
             <span className="text-blue-600">Reduce Waste.</span>
           </div>
           {/* description */}
