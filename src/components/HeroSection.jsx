@@ -26,7 +26,7 @@ const HeroSection = () => {
               food, medicine, cleaning supplies and more.
             </p>
           </div>
-          <div className="pt-8 space-x-4">
+          <div className="flex flex-col sm:flex-row space-x-4 space-y-6 sm:space-y-0 pt-6">
             <Link
               to={"/login"}
               className="bg-blue-600 text-white font-medium p-4 rounded-full hover:bg-blue-700"
