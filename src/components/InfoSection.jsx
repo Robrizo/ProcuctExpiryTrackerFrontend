@@ -3,7 +3,7 @@ import React from "react";
 const InfoSection = () => {
   return (
     <section className="py-18 grid grid-cols-1 sm:grid-cols-3 gap-4 mx-auto px-4 sm:px-6 lg:px-8 bg-blue-50/10 max-w-6xl">
-      <div className="text-center space-y-6 md:space-y-0">
+      <div className="text-center space-y-2">
         <h2 className="text-4xl text-blue-600 font-stylish font-semibold">
           7 Days
         </h2>
