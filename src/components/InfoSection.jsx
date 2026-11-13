@@ -10,13 +10,13 @@ const InfoSection = () => {
         <p className="text-sm text-gray-700">advance warning</p>
       </div>
       <div className="text-center space-y-2">
-        <h2 className="text-4xl text-blue-600 font-stylish font-medium">
+        <h2 className="text-4xl text-blue-600 font-stylish font-semibold">
           Daily
         </h2>
         <p className="text-sm text-gray-700">automatic checks</p>
       </div>
       <div className="text-center space-y-2">
-        <h2 className="text-4xl text-blue-600 font-stylish font-medium">
+        <h2 className="text-4xl text-blue-600 font-stylish font-semibold">
           3 States
         </h2>
         <p className="text-sm text-gray-700">fresh • expiring soon • expired</p>
