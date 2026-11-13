@@ -4,12 +4,12 @@ import { Link } from "react-router";
 
 const HeroSection = () => {
   return (
-    <div className="h-screen">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-center h-full">
+    <div className="h-screen py-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col  items-center justify-center lg:flex-row h-full">
         {/* welcome */}
-        <div className="flex-1 space-y-4">
+        <div className="md:flex-1 space-y-4 text-center">
           {/* title */}
-          <div className="flex flex-col text-6xl text-blue-600 font-bold">
+          <div className="flex flex-col text-6xl sm:text-3xl text-blue-600 font-bold">
             <span>Product</span>
             <span>Expiry Tracker</span>
           </div>
@@ -19,7 +19,7 @@ const HeroSection = () => {
             <span className="text-blue-600">Reduce Waste.</span>
           </div>
           {/* description */}
-          <div className="text-gray-700 text-lg">
+          <div className="text-gray-700 text-lg hidden">
             <p className="max-w-lg">
               <span>PET</span> keeps a live status of your household inventory
               and warns you a full week before anything goes off. For example,
@@ -41,8 +41,9 @@ const HeroSection = () => {
             </a>
           </div>
         </div>
+
         {/* hero image */}
-        <div className="flex-1">
+        <div className="flex-1 hidden lg:block">
           <img src={heroImage} alt="" className="rounded-xl" />
         </div>
       </div>

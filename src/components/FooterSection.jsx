@@ -4,7 +4,7 @@ import { date } from "zod/v3";
 const FooterSection = () => {
   return (
     <div className="bg-blue-50 border-t border-gray-300 py-8 text-center text-sm">
-      <div className="flex justify-between mx-auto max-w-7xl">
+      <div className="flex flex-col space-y-4 md:space-y-0 md:justify-between mx-auto max-w-7xl">
         <div className="text-gray-600">
           &copy; {new Date().getFullYear()} PET. Waste less, live better
         </div>
